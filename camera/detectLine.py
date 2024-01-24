@@ -8,13 +8,11 @@ class DetectLine:
         self.lane_image = np.copy(self.image)
         self.lane_canny = self.canny(self.lane_image)
         self.cropped_canny = self.region_of_interest(self.lane_canny)
-
-        self.averaged_lines = self.average_slope_intercept(self.cropped_canny)
+        self.averaged_lines =  self.get_lines(self.cropped_canny)
         self.line_image = self.display_lines(self.lane_image, self.averaged_lines)
-
         self.combo_image = cv2.addWeighted(self.image, 0.8, self.line_image, 1, 0)
 
-    def get_line(self, image):
+    def get_lines(self, image):
         lines = cv2.HoughLinesP(image, 2, np.pi/180, 100, np.array([]), minLineLength=40,maxLineGap=5)
         averaged_lines = self.average_slope_intercept(self.image, lines)
         return averaged_lines
@@ -58,7 +56,7 @@ class DetectLine:
         canny = cv2.Canny(gray, 50, 150)
         return canny
 
-    def display_lines(self, img,lines):
+    def display_lines(self, img, lines):
         line_image = np.zeros_like(img)
         if lines is not None:
             for line in lines:
