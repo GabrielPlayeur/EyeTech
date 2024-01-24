@@ -21,6 +21,9 @@ class DetectLine:
         if not isinstance(line, np.ndarray):
             return [[300, image.shape[0], 300, image.shape[0]]]
         slope, intercept = line
+        if slope == 0:
+            return [[0, 0, 0, 0]]
+
         y1 = int(image.shape[0])
         y2 = int(y1*3/5)
         x1 = int((y1 - intercept)/slope)
@@ -85,7 +88,7 @@ class DetectLine:
         self.show(self.combo_image)
 
 picam2 = Picamera2()
-picam2.configure(picam2.create_preview_configuration(main={"format": 'XRGB8888', "size": (640, 480)}))
+picam2.configure(picam2.create_preview_configuration(main={"format": 'XRGB8888', "size": (808, 606)}))
 picam2.start()
 
 while True:
