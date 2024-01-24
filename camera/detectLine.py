@@ -73,9 +73,9 @@ class DetectLine:
         mask = np.zeros_like(canny)
 
         triangle = np.array([[
-        (200, height),
-        (550, 250),
-        (1100, height),]], np.int32)
+        (0, height),
+        (400, 300),
+        (height, height),]], np.int32)
 
         cv2.fillPoly(mask, triangle, 255)
         masked_image = cv2.bitwise_and(canny, mask)
