@@ -44,8 +44,8 @@ class DetectLine:
 
         left_fit_average  = np.average(left_fit, axis=0)
         right_fit_average = np.average(right_fit, axis=0)
-        left_line  = make_points(image, left_fit_average)
-        right_line = make_points(image, right_fit_average)
+        left_line  = self.make_points(image, left_fit_average)
+        right_line = self.make_points(image, right_fit_average)
         averaged_lines = [left_line, right_line]
         return averaged_lines
 
