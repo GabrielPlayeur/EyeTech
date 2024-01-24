@@ -21,9 +21,10 @@ class DetectLine:
         if not isinstance(line, np.ndarray):
             return [[300, image.shape[0], 300, image.shape[0]]]
         slope, intercept = line
-        if slope == 0:
-            return [[0, 10, 0, 10]]
+        if  -0.01 <= slope <= 0.01:
+            return [[0, 0, 10, 10]]
 
+        print(slope)
         y1 = int(image.shape[0])
         y2 = int(y1*3/5)
         x1 = int((y1 - intercept)/slope)
@@ -62,6 +63,7 @@ class DetectLine:
     def display_lines(self, img, lines):
         line_image = np.zeros_like(img)
         if lines is not None:
+            print(lines)
             for line in lines:
                 for x1, y1, x2, y2 in line:
                     cv2.line(line_image,(x1,y1),(x2,y2),(255,0,0),10)
