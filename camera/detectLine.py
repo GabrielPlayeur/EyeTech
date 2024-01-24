@@ -22,7 +22,7 @@ class DetectLine:
             return [[300, image.shape[0], 300, image.shape[0]]]
         slope, intercept = line
         if slope == 0:
-            return [[0, 0, 0, 0]]
+            return [[0, 10, 0, 10]]
 
         y1 = int(image.shape[0])
         y2 = int(y1*3/5)
