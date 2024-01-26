@@ -1,38 +1,33 @@
 import cv2
 import numpy as np
-from picamera2 import Picamera2
 
 class DetectLine:
-    def __init__(self, frame):
+    def __init__(self, frame) -> None:
         self.image = frame
         self.lane_image = np.copy(self.image)
-        self.lane_canny = self.canny(self.lane_image)
-        self.cropped_canny = self.region_of_interest(self.lane_canny)
-        self.averaged_lines =  self.get_lines(self.cropped_canny)
-        self.line_image = self.display_lines(self.lane_image, self.averaged_lines)
-        self.combo_image = cv2.addWeighted(self.image, 0.8, self.line_image, 1, 0)
+        self.lane_canny = self.canny(self.lane_image) #Search every line with gradiant
+        self.cropped_canny = self.region_of_interest(self.lane_canny) #Croppe image
+        self.lines =  self.get_lines(self.cropped_canny) #Find lines
 
-    def get_lines(self, image):
+    def get_lines(self, image) -> list[list[int]]:
         lines = cv2.HoughLinesP(image, 2, np.pi/180, 100, np.array([]), minLineLength=40,maxLineGap=5)
-        averaged_lines = self.average_slope_intercept(self.image, lines)
-        return averaged_lines
+        return self.average_slope_intercept(lines)
 
-    def make_points(self, image, line: np.ndarray):
+    def make_points(self, line: np.ndarray) -> list[list[int]]:
         if not isinstance(line, np.ndarray):
-            return [[300, image.shape[0], 300, image.shape[0]]]
+            return [[300, self.image.shape[0], 300, self.image.shape[0]]]
         slope, intercept = line
         if  -0.01 <= slope <= 0.01:
             return [[0, 0, 10, 10]]
-
-        y1 = int(image.shape[0])
+        y1 = int(self.image.shape[0])
         y2 = int(y1*3/5)
         x1 = int((y1 - intercept)/slope)
         x2 = int((y2 - intercept)/slope)
         return [[x1, y1, x2, y2]]
 
-    def average_slope_intercept(self, image, lines):
-        left_fit    = []
-        right_fit   = []
+    def average_slope_intercept(self, lines) -> list[list[int]]:
+        left_fit = []
+        right_fit = []
         if lines is None:
             return None
         for line in lines:
@@ -44,23 +39,22 @@ class DetectLine:
                     left_fit.append((slope, intercept))
                 else:
                     right_fit.append((slope, intercept))
-
         left_fit_average  = np.average(left_fit, axis=0)
         right_fit_average = np.average(right_fit, axis=0)
-        left_line  = self.make_points(image, left_fit_average)
-        right_line = self.make_points(image, right_fit_average)
+        left_line  = self.make_points(left_fit_average)
+        right_line = self.make_points(right_fit_average)
         averaged_lines = [left_line, right_line]
         return averaged_lines
 
-    def canny(self, img):
-        gray = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+    def canny(self, image):
+        gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
         kernel = 5
         blur = cv2.GaussianBlur(gray,(kernel, kernel),0)
         canny = cv2.Canny(gray, 50, 150)
         return canny
 
-    def display_lines(self, img, lines):
-        line_image = np.zeros_like(img)
+    def display_lines(self, image, lines):
+        line_image = np.zeros_like(image)
         if lines is not None:
             for line in lines:
                 for x1, y1, x2, y2 in line:
@@ -71,30 +65,21 @@ class DetectLine:
         height = canny.shape[0]
         width = canny.shape[1]
         mask = np.zeros_like(canny)
-
         triangle = np.array([[
         (0, height),
-        (400, 300),
-        (height, height),]], np.int32)
-
+        (width//2, height//2),
+        (width, height),]], np.int32)
         cv2.fillPoly(mask, triangle, 255)
         masked_image = cv2.bitwise_and(canny, mask)
         return masked_image
 
-    def show(self, image, title="result"):
+    def getFinalImage(self):
+        line_image = self.display_lines(self.lane_image, self.averaged_lines)
+        combo_image = cv2.addWeighted(self.image, 0.8, line_image, 1, 0)
+        return combo_image
+
+    def showImage(self, image, title):
         cv2.imshow(title, image)
 
-    def showRes(self):
-        self.show(self.combo_image)
-
-picam2 = Picamera2()
-picam2.configure(picam2.create_preview_configuration(main={"format": 'XRGB8888', "size": (808, 606)}))
-picam2.start()
-
-while True:
-    im = picam2.capture_array()
-    detectLine = DetectLine(im)
-
-    detectLine.showRes()
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
+    def showFinalImage(self):
+        self.showImage(self.getFinalImage(), "result")
