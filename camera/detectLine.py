@@ -74,7 +74,7 @@ class DetectLine:
         return masked_image
 
     def getFinalImage(self):
-        line_image = self.display_lines(self.lane_image, self.averaged_lines)
+        line_image = self.display_lines(self.lane_image, self.lines)
         combo_image = cv2.addWeighted(self.image, 0.8, line_image, 1, 0)
         return combo_image
 
