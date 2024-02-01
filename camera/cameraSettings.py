@@ -1,10 +1,11 @@
 from picamera2 import Picamera2
 from cv2 import VideoWriter, VideoWriter_fourcc, destroyAllWindows, waitKey
 from detectLine import DetectLine
-from timeit import timeit
+import numpy as np
 
 class Camera(Picamera2):
     def __init__(self, size=(808,606), outputFileName="test.mp4") -> None:
+        super().__init__()
         self.size = size
         self.fps = 5
         self.config = {"format": 'XRGB8888', "size": self.size}
@@ -12,7 +13,6 @@ class Camera(Picamera2):
         self.writer = VideoWriter(outputFileName, VideoWriter_fourcc(*'mp4v'), self.fps, self.size, True)
         self.isRecording = False
 
-    @timeit
     def detectLineInFrame(self, preview=False, saveOutput=False) -> list[list[int]]:
         frame = self.capture_array()
         detectLine = DetectLine(frame)
@@ -22,12 +22,10 @@ class Camera(Picamera2):
             self.preview(detectLine)
         return detectLine.lines
 
-    @timeit
-    def write(self, frame) -> None:
+    def write(self, frame: np.ndarray) -> None:
         self.writer.write(frame[:,:,0:3])
 
-    @timeit
-    def preview(self, detectLine: DetectLine):
+    def preview(self, detectLine: DetectLine) -> None:
         detectLine.showFinalImage()
 
     def start(self) -> None:

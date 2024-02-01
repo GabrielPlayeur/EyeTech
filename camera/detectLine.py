@@ -1,17 +1,15 @@
 import cv2
 import numpy as np
-from timing import timeit
 
 class DetectLine:
-    @timeit
-    def __init__(self, frame) -> None:
+    def __init__(self, frame: np.ndarray) -> None:
         self.image = frame
         self.lane_image = np.copy(self.image)
         self.cropped_canny = self.region_of_interest(self.lane_image) #Croppe image
         self.lane_canny = self.canny(self.cropped_canny) #Search every line with gradiant
         self.lines =  self.get_lines(self.lane_canny) #Find lines
 
-    def get_lines(self, image) -> list[list[int]]:
+    def get_lines(self, image: np.ndarray) -> list[list[int]]:
         lines = cv2.HoughLinesP(image, 2, np.pi/180, 100, np.array([]), minLineLength=40,maxLineGap=5)
         return self.average_slope_intercept(lines)
 
@@ -27,7 +25,7 @@ class DetectLine:
         x2 = int((y2 - intercept)/slope)
         return [[x1, y1, x2, y2]]
 
-    def average_slope_intercept(self, lines) -> list[list[int]]:
+    def average_slope_intercept(self, lines: np.ndarray) -> list[list[int]]:
         left_fit = []
         right_fit = []
         if lines is None:
@@ -48,12 +46,12 @@ class DetectLine:
         averaged_lines = [left_line, right_line]
         return averaged_lines
 
-    def canny(self, image):
+    def canny(self, image: np.ndarray) -> np.ndarray:
         gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
         canny = cv2.Canny(gray, 50, 150)
         return canny
 
-    def display_lines(self, image, lines):
+    def display_lines(self, image: np.ndarray, lines: list[list[int]]) -> np.ndarray:
         line_image = np.zeros_like(image)
         if lines is not None:
             for line in lines:
@@ -61,7 +59,7 @@ class DetectLine:
                     cv2.line(line_image,(x1,y1),(x2,y2),(255,0,0),10)
         return line_image
 
-    def region_of_interest(self, canny):
+    def region_of_interest(self, canny: np.ndarray) -> np.ndarray:
         height = canny.shape[0]
         width = canny.shape[1]
         mask = np.zeros_like(canny)
@@ -73,13 +71,13 @@ class DetectLine:
         masked_image = cv2.bitwise_and(canny, mask)
         return masked_image
 
-    def getFinalImage(self):
+    def getFinalImage(self) -> np.ndarray:
         line_image = self.display_lines(self.lane_image, self.lines)
         combo_image = cv2.addWeighted(self.image, 0.8, line_image, 1, 0)
         return combo_image
 
-    def showImage(self, image, title):
+    def showImage(self, image: np.ndarray, title: str) -> None:
         cv2.imshow(title, image)
 
-    def showFinalImage(self):
+    def showFinalImage(self) -> None:
         self.showImage(self.getFinalImage(), "result")
