@@ -1,0 +1,4 @@
+# This file is used internally by FFMPEG.
+file 'file:C:/Users/Clement/Documents/ConfPeip/linesProcessing/anim/media/videos/testvideo/720p30/partial_movie_files/ValueTrack/2016333726_4067516255_223132457.mp4'
+file 'file:C:/Users/Clement/Documents/ConfPeip/linesProcessing/anim/media/videos/testvideo/720p30/partial_movie_files/ValueTrack/543634251_1704852926_4118944056.mp4'
+file 'file:C:/Users/Clement/Documents/ConfPeip/linesProcessing/anim/media/videos/testvideo/720p30/partial_movie_files/ValueTrack/543634251_1248900567_3766244298.mp4'
