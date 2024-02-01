@@ -1,4 +1,4 @@
-from camera.cameraSettings import Camera
+from cameraSettings import Camera
 
 camera = Camera()
 camera.start()
