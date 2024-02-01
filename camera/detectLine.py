@@ -1,13 +1,15 @@
 import cv2
 import numpy as np
+from timing import timeit
 
 class DetectLine:
+    @timeit
     def __init__(self, frame) -> None:
         self.image = frame
         self.lane_image = np.copy(self.image)
-        self.lane_canny = self.canny(self.lane_image) #Search every line with gradiant
-        self.cropped_canny = self.region_of_interest(self.lane_canny) #Croppe image
-        self.lines =  self.get_lines(self.cropped_canny) #Find lines
+        self.cropped_canny = self.region_of_interest(self.lane_image) #Croppe image
+        self.lane_canny = self.canny(self.cropped_canny) #Search every line with gradiant
+        self.lines =  self.get_lines(self.lane_canny) #Find lines
 
     def get_lines(self, image) -> list[list[int]]:
         lines = cv2.HoughLinesP(image, 2, np.pi/180, 100, np.array([]), minLineLength=40,maxLineGap=5)
@@ -48,8 +50,6 @@ class DetectLine:
 
     def canny(self, image):
         gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
-        kernel = 5
-        blur = cv2.GaussianBlur(gray,(kernel, kernel),0)
         canny = cv2.Canny(gray, 50, 150)
         return canny
 
