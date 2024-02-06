@@ -1,6 +1,0 @@
-# This file is used internally by FFMPEG.
-file 'file:C:/Users/Clement/Documents/ConfPeip/linesProcessing/anim/media/videos/testvideo/720p30/partial_movie_files/Graphe/2016333726_2754876292_223132457.mp4'
-file 'file:C:/Users/Clement/Documents/ConfPeip/linesProcessing/anim/media/videos/testvideo/720p30/partial_movie_files/Graphe/543634251_647138926_3818794626.mp4'
-file 'file:C:/Users/Clement/Documents/ConfPeip/linesProcessing/anim/media/videos/testvideo/720p30/partial_movie_files/Graphe/543634251_1704852926_2010988868.mp4'
-file 'file:C:/Users/Clement/Documents/ConfPeip/linesProcessing/anim/media/videos/testvideo/720p30/partial_movie_files/Graphe/543634251_2259446982_4125264177.mp4'
-file 'file:C:/Users/Clement/Documents/ConfPeip/linesProcessing/anim/media/videos/testvideo/720p30/partial_movie_files/Graphe/543634251_1704852926_1148048173.mp4'
