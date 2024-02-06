@@ -29,6 +29,7 @@ class Camera(Picamera2):
 
     def preview(self, detectLine: DetectLine) -> None:
         detectLine.showFinalImage()
+        self.wait()
 
     def start(self) -> None:
         self.isRecording = True
