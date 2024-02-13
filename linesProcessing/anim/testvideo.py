@@ -44,13 +44,13 @@ class Graphe(Scene):
         self.wait()
 
 
-#HOME= "C:\Users\Clement\OneDrive\Bureau\Image\wallpaper"
 
-#class Image(Scene):
-#    def construct(self) : 
-#        imag= ImageMobject(f"{HOME}\\vivi (2).JPG")
-#
-#
-#        self.play(SpinInFromNothing(imag))
+
+class Image(Scene):
+       def construct(self) : 
+        imag= ImageMobject("test_image")
+
+
+        self.play(SpinInFromNothing(imag))
     
 
