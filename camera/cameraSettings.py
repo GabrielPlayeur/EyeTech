@@ -2,7 +2,6 @@ from picamera2 import Picamera2
 from cv2 import VideoWriter, VideoWriter_fourcc, destroyAllWindows, waitKey
 from detectLine import DetectLine
 import numpy as np
-from warnings import simplefilter
 
 class Camera(Picamera2):
     def __init__(self, size=(808,606), outputFileName="test.mp4") -> None:
@@ -13,7 +12,6 @@ class Camera(Picamera2):
         self.configure(self.create_preview_configuration(main=self.config))
         self.writer = VideoWriter(outputFileName, VideoWriter_fourcc(*'mp4v'), self.fps, self.size, True)
         self.isRecording = False
-        simplefilter('ignore', np.RankWarning)
 
     def detectLineInFrame(self, preview=False, saveOutput=False) -> list[list[int]]:
         frame = self.capture_array()

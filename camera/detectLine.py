@@ -1,12 +1,14 @@
 import cv2
 import numpy as np
+from warnings import simplefilter
+simplefilter('ignore', np.RankWarning)
 
 class DetectLine:
     def __init__(self, frame: np.ndarray) -> None:
         self.image = frame
         self.lane_image = np.copy(self.image)
-        self.cropped_canny = self.region_of_interest(self.lane_image) #Croppe image
-        self.lane_canny = self.canny(self.cropped_canny) #Search every line with gradiant
+        self.lane_canny = self.canny(self.lane_image) #Search every line with gradiant
+        self.cropped_canny = self.region_of_interest(self.lane_canny) #Croppe image
         self.lines =  self.get_lines(self.lane_canny) #Find lines
 
     def get_lines(self, image: np.ndarray) -> list[list[int]]:

@@ -62,6 +62,7 @@ def region_of_interest(canny):
     masked_image = cv2.bitwise_and(canny, mask)
     return masked_image
 
+
 image = cv2.imread('test_image.jpg')
 lane_image = np.copy(image)
 lane_canny = canny(lane_image)
