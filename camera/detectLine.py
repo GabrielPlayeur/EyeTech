@@ -45,7 +45,7 @@ class DetectLine:
         right_fit_average = np.average(right_fit, axis=0)
         left_line  = self.make_points(left_fit_average)
         right_line = self.make_points(right_fit_average)
-        averaged_lines = [left_line, right_line]
+        averaged_lines = {"left": left_line, "right": right_line}
         return averaged_lines
 
     def canny(self, image: np.ndarray) -> np.ndarray:
