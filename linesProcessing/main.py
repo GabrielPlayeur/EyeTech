@@ -7,7 +7,7 @@ class LinesProcess:
         self.queue = []
         self.delay = 0.5
 
-    def calcul(self, lignes: dict[tuple[int, int, int, int]]) -> list:
+    def calcul(self, lignes: dict) -> list:
         if lignes["right"][1] >= lignes["right"][3]:
             minXRight = lignes["right"][2]
         else:
@@ -26,13 +26,15 @@ class LinesProcess:
     def updateQueue(self, value: list) -> None:
         newTime = time()
         self.queue.append((newTime, value))
-        while len(self.queue) > 0 or newTime - self.queue[0][0] >= self.delay:
+        while len(self.queue) > 0 and newTime - self.queue[0][0] >= self.delay:
             self.queue.pop(0)
 
-    def moyenne(self, newValue: list) -> list:
+    def moyenne(self, newValue: list,a=0,b=0) -> list:
         self.updateQueue(newValue)
-        return [reduce(lambda x,y: x[1][0]+y[1][0], self.queue)/len(self.queue), 
-                reduce(lambda x,y: x[1][1]+y[1][1], self.queue)/len(self.queue)]
+        for i in self.queue:
+            a+=i[1][0]
+            b+=i[1][1]
+        return [a/len(self.queue),b/len(self.queue)]
 
     def linePosition(self, moy: list) -> int:
         value=0
