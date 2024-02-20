@@ -27,12 +27,12 @@ class DetectLine:
         x2 = int((y2 - intercept)/slope)
         return [[x1, y1, x2, y2]]
 
-    def average_slope_intercept(self, lines: dict) -> dict[list[int]]:
+    def average_slope_intercept(self, lines: np.ndarray) -> dict[list[int]]:
         left_fit = []
         right_fit = []
         if lines is None:
             return None
-        for line in lines.values():
+        for line in lines:
             for x1, y1, x2, y2 in line:
                 fit = np.polyfit((x1,x2), (y1,y2), 1)
                 slope = fit[0]
