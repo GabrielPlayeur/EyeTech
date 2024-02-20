@@ -11,7 +11,7 @@ class DetectLine:
         self.cropped_canny = self.region_of_interest(self.lane_canny) #Croppe image
         self.lines =  self.get_lines(self.lane_canny) #Find lines
 
-    def get_lines(self, image: np.ndarray) -> list[list[int]]:
+    def get_lines(self, image: np.ndarray) -> dict[list[int]]:
         lines = cv2.HoughLinesP(image, 2, np.pi/180, 100, np.array([]), minLineLength=40,maxLineGap=5)
         return self.average_slope_intercept(lines)
 
@@ -27,12 +27,12 @@ class DetectLine:
         x2 = int((y2 - intercept)/slope)
         return [[x1, y1, x2, y2]]
 
-    def average_slope_intercept(self, lines: np.ndarray) -> list[list[int]]:
+    def average_slope_intercept(self, lines: dict) -> dict[list[int]]:
         left_fit = []
         right_fit = []
         if lines is None:
             return None
-        for line in lines:
+        for line in lines.values():
             for x1, y1, x2, y2 in line:
                 fit = np.polyfit((x1,x2), (y1,y2), 1)
                 slope = fit[0]
@@ -53,10 +53,10 @@ class DetectLine:
         canny = cv2.Canny(gray, 50, 150)
         return canny
 
-    def display_lines(self, image: np.ndarray, lines: list[list[int]]) -> np.ndarray:
+    def display_lines(self, image: np.ndarray, lines: dict[list[int]]) -> np.ndarray:
         line_image = np.zeros_like(image)
         if lines is not None:
-            for line in lines:
+            for line in lines.values():
                 for x1, y1, x2, y2 in line:
                     cv2.line(line_image,(x1,y1),(x2,y2),(255,0,0),10)
         return line_image
