@@ -10,13 +10,19 @@ class Control (ParentsMotor) :
             self.VIBG(0)
 
         elif puissance == 1 :
-            self.VIBD(0.5)
+            self.VIBD(0.33)
 
         elif puissance == 2 :
-            self.VIBD(1)
+            self.VIBD(0.66)
 
         elif puissance == -1 :
-            self.VIBG(0.5)
+            self.VIBG(0.33)
 
         elif puissance == -2 :
+            self.VIBG(0.66)
+        
+        elif puissance == - 10 :
             self.VIBG(1)
+        
+        elif puissance == 10 :
+            self.VIBD(1)
