@@ -1,25 +1,14 @@
 import cv2
-import mediapipe as mp
 
-mp_hands=mp.solutions.hands
-mp_drawing=mp.solutions.drawing_untils
-
-webcam=cv2.VideoCapture(0)
-while webcam.isOpened():
-    _, frame = webcam.red()
-
-    results=mp_hands.Hands(max_num_hands=3,min_detection_confidence=0.7,min_tracking_confidence=0.7).process(frame)
-   
-webcam.release()
-cv2.destroyAllWindows()
-
-hand_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_hand.xml')
+hand_cascade = cv2.CascadeClassifier('palm.xml')
 cap = cv2.VideoCapture(0)
 
 while True:
     # Lire une image de la webcam
     _, frame = cap.read()
-    # Détecter les mains dans l'image
+    # Détecter les mains dans l'image    
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY) #Converts image to grayscale
+    hands = hand_cascade.detectMultiScale(gray, scaleFactor=1.6, minNeighbors=5) #All detected hands get put into an array
     hands = hand_cascade.detectMultiScale( 1.1, 5)
 
 
