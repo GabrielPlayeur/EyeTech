@@ -1,9 +1,10 @@
 from parentsMotor import ParentsMotor
 from time import sleep
 
-class fin (ParentsMotor) :
+class Fin (ParentsMotor) :
     def __init__(self) -> None:
         super().__init__()
+        self.duree=0.25
 
     def long (self): 
         """tps vibration morse"""
@@ -21,7 +22,7 @@ class fin (ParentsMotor) :
         self.VIBG(0) 
         self.VIBG(0)
 
-    def fin (self):
+    def start (self):
         """fin en morse"""
         self.court()
         self.court()
