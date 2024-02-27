@@ -52,5 +52,4 @@ class Image(Scene):
 
 
         self.play(SpinInFromNothing(imag))
-    
 

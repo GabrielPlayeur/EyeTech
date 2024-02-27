@@ -86,7 +86,7 @@ class Lines(Scene):
             p100_DL,  # bottom left
             p100_UL,  # top left
         ]
-        zoneRED_L = Polygon(*position_RED_L, color=c[0], fill_color=c[3],fill_opacity=0.5)
+        zoneRED_L = Polygon(*position_RED_L, color=c[3], fill_color=c[3],fill_opacity=0.5)
 
         position_RED_R = [
             p66_UR,  # top right
@@ -94,7 +94,7 @@ class Lines(Scene):
             p100_DR,  # bottom left
             p100_UR,  # top left
         ]
-        zoneRED_R = Polygon(*position_RED_R, color=c[0], fill_color=c[3],fill_opacity=0.5)
+        zoneRED_R = Polygon(*position_RED_R, color=c[3], fill_color=c[3],fill_opacity=0.5)
 
         
         ##############################################SCENARIO#####################################################
@@ -140,11 +140,21 @@ class Hough(Scene):
 
         arrow = always_redraw(lambda: Line(start=Eq[0].get_right(), end=Eq[1].get_left(), buff=1).add_tip())
         
+        sq=Rectangle(height=1, width=5, color=BLACK, fill_color=GREEN, fill_opacity=1, z_index=-1).to_corner(DR)
+        
+        position_CACHE = [
+            [8,-2.7,0],  # top right
+            [8,-4,0],  # bottom right
+            [2,-4,0],  # bottom left
+            [2,-2.7,0],  # top left
+        ]
+        zoneCACHE = Polygon(*position_CACHE, color=BLACK, fill_color=BLACK ,fill_opacity=1, z_index=-1)
+
 
         plane_Eq_Image=(
             Axes(
                 x_range=[-1, 8], y_range=[-1, 8], x_length=5, y_length=5,
-                axis_config={"font_size": 24}
+                axis_config={"font_size": 16}
                 )
             .to_edge(LEFT)
             .add_coordinates()
@@ -156,7 +166,7 @@ class Hough(Scene):
         plane_Eq_Parameter=(
             Axes(
                 x_range=[-1, 8], y_range=[-1, 8], x_length=5, y_length=5,
-                axis_config={"font_size": 24}
+                axis_config={"font_size": 16}
                 )
             .to_edge(RIGHT)
             #.add_coordinates()
@@ -180,7 +190,8 @@ class Hough(Scene):
         fake_x=1
         fake_y=5
         Fakepoint=Dot(plane_Eq_Image.c2p(fake_x,fake_y))
-        curve_Fakepoint=plane_Eq_Parameter.plot(lambda x: -fake_x*x+fake_y)
+        curve_Fakepoint=plane_Eq_Parameter.plot(lambda x: -fake_x*x+fake_y, z_index=-3)
+
         
             
 
@@ -198,23 +209,27 @@ class Hough(Scene):
         self.wait()
         self.play(Create(VGroup(labels_Eq_Image,labels_Eq_Parameter,func_label_Eq_Image,func_label_Eq_Parameter)))
         self.wait()
+        self.add(zoneCACHE)
+        self.play(Create(Fakepoint))
+        self.wait()
+        self.play(Create(curve_Fakepoint))
+        self.wait()
         pt_x=0
         pt_y=1
         for i in np.arange(1, 5,1):
             pt_x=pt_x+1.5
             pt_y=pt_y+0.5
             dot=Dot(plane_Eq_Image.c2p(pt_x,pt_y))
-            curve=(plane_Eq_Parameter.plot(lambda x: -pt_x*x+pt_y))
+            curve=(plane_Eq_Parameter.plot(lambda x: -pt_x*x+pt_y, z_index=-3))
             self.play(Create(dot))
             self.wait()
-            self.add((curve))
+            self.play(Create(curve))
             self.wait()
         self.play(Create(Cross))
         self.wait()
         self.play(Create(dashed_line))
         self.wait()
-        self.play(Create(Fakepoint))
-        self.wait()
-        self.play(Create(curve_Fakepoint))
-        self.wait()
+
+
+
 
