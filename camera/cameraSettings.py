@@ -7,6 +7,7 @@ class Camera(Picamera2):
     def __init__(self, size=(808,606), outputFileName="test.mp4") -> None:
         super().__init__()
         self.size = size
+        self.mid = size[0]//2
         self.fps = 5
         self.config = {"format": 'XRGB8888', "size": self.size}
         self.configure(self.create_preview_configuration(main=self.config))
