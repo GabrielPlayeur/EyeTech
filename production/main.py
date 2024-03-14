@@ -1,4 +1,6 @@
 from controller import Controller
 
 controller = Controller()
-controller.start()
+while True:
+    controller.start()
+    controller.waiting()
