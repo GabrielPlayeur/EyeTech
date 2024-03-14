@@ -6,7 +6,7 @@ class Accueil (ParentsMotor) :
         super().__init__()
         self.duree=0.25
 
-    def long (self): 
+    def long (self) -> None: 
         """tps vibration morse"""
         self.VIBG(1)
         self.VIBG(1)
@@ -14,7 +14,7 @@ class Accueil (ParentsMotor) :
         self.VIBG(0) 
         self.VIBG(0)
 
-    def court (self):
+    def court (self) -> None:
         """tps vibration morse"""
         self.VIBG(1)
         self.VIBG(1)
@@ -22,7 +22,7 @@ class Accueil (ParentsMotor) :
         self.VIBG(0) 
         self.VIBG(0)
 
-    def start (self):
+    def start (self) -> None:
         """go en morse"""
         self.long()
         self.long()

@@ -10,7 +10,7 @@ class Controller:
         self.camera = Camera()
         self.linesProcess = LinesProcess(self.camera.mid)
 
-    def start(self):
+    def start(self) -> None:
         self.camera.start()
         while self.camera.isRecording:
             coords = self.camera.detectLineInFrame(preview=False, saveOutput=False)
