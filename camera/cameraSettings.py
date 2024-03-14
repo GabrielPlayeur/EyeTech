@@ -1,6 +1,7 @@
 from picamera2 import Picamera2
 from cv2 import VideoWriter, VideoWriter_fourcc, destroyAllWindows, waitKey
 from detectLine import DetectLine
+from detectBlackScreen import DetectBlackScreen
 import numpy as np
 
 class Camera(Picamera2):
@@ -22,6 +23,10 @@ class Camera(Picamera2):
         if preview:
             self.preview(detectLine)
         return detectLine.lines
+
+    def checkRecording(self) -> None:
+        frame = self.capture_array()
+        self.isRecording = not DetectBlackScreen(frame).isBlack()
 
     def write(self, frame: np.ndarray) -> None:
         self.writer.write(frame[:,:,0:3])
