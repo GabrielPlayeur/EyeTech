@@ -16,10 +16,12 @@ class Controller:
         self.linesProcess = LinesProcess(self.camera.mid)
 
     def waiting(self) -> None:
+        print('Waiting')
         while not self.camera.isRecording:
             self.camera.checkRecording()
 
     def start(self) -> None:
+        print('Start')
         self.accueilMotor.start()
         self.camera.start()
         while self.camera.isRecording:

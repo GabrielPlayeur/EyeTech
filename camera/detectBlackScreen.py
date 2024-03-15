@@ -29,8 +29,10 @@ class DetectBlackScreen:
 
 if __name__ == "__main__":
     from cameraSettings import Camera
+    c=Camera()
+    c.start()
     while True:
-        img = Camera().capture_array()
+        img = c.capture_array()
         d = DetectBlackScreen(img)
         print(d.countWhitePixel())
         d.showAllImage()
