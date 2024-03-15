@@ -1,7 +1,7 @@
 from gpiozero import PWMOutputDevice
 
 class ParentsMotor :
-    def __init__(self) -> None:
+    def setPin(self):
         self.MG = PWMOutputDevice("GPIO13")
         self.MD = PWMOutputDevice("GPIO19")
 

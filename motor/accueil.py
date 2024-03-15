@@ -2,8 +2,10 @@ from .parentsMotor import ParentsMotor
 from time import sleep
 
 class Accueil (ParentsMotor) :
-    def __init__(self) -> None:
+    def __init__(self, vibG, vibD) -> None:
         super().__init__()
+        self.MG = vibG
+        self.MD = vibD
         self.duree=0.25
 
     def long (self) -> None: 

@@ -4,13 +4,15 @@ directory = path.Path(__file__).abspath()
 sys.path.append(directory.parent.parent)
 from camera import Camera
 from linesProcessing import LinesProcess
-from motor import ControlMotor, Accueil, Fin
+from motor import ControlMotor, Accueil, Fin, ParentsMotor
 
 class Controller:
     def __init__(self) -> None:
         self.camera = Camera()
-        self.accueilMotor = Accueil()
-        self.finMotor = Accueil()
+        self.parentMotor = ParentsMotor()
+        self.parentMotor.setPin()
+        self.accueilMotor = Accueil(self.parentMotor.MG,self.parentMotor.MD)
+        self.finMotor = Fin(self.parentMotor.MG,self.parentMotor.MD)
         self.controlMotor = ControlMotor()
         self.linesProcess = LinesProcess(self.camera.mid)
 
