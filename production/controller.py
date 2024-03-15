@@ -2,10 +2,9 @@ import path
 import sys
 directory = path.Path(__file__).abspath()
 sys.path.append(directory.parent.parent)
-from camera.cameraSettings import Camera
-from linesProcessing.main import LinesProcess
-from motor.control import ControlMotor
-from motor.accueil import Accueil
+from camera import Camera
+from linesProcessing import LinesProcess
+from motor import ControlMotor, Accueil
 
 class Controller:
     def __init__(self) -> None:
