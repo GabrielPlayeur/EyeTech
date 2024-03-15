@@ -9,18 +9,18 @@ class Accueil (ParentsMotor) :
     def long (self) -> None: 
         """tps vibration morse"""
         self.VIBG(1)
-        self.VIBG(1)
+        self.VIBD(1)
         sleep(3*self.duree)
         self.VIBG(0) 
-        self.VIBG(0)
+        self.VIBD(0)
 
     def court (self) -> None:
         """tps vibration morse"""
         self.VIBG(1)
-        self.VIBG(1)
+        self.VIBD(1)
         sleep(self.duree)
         self.VIBG(0) 
-        self.VIBG(0)
+        self.VIBD(0)
 
     def start (self) -> None:
         """go en morse"""
