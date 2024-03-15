@@ -1,4 +1,4 @@
-from parentsMotor import ParentsMotor
+from .parentsMotor import ParentsMotor
 from time import sleep
 
 class Fin (ParentsMotor) :

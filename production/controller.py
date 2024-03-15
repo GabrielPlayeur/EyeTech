@@ -4,7 +4,7 @@ directory = path.Path(__file__).abspath()
 sys.path.append(directory.parent.parent)
 from camera import Camera
 from linesProcessing import LinesProcess
-from motor import ControlMotor, Accueil
+from motor import ControlMotor, Accueil, Fin
 
 class Controller:
     def __init__(self) -> None:

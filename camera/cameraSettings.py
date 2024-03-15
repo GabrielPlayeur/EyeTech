@@ -1,7 +1,7 @@
 from picamera2 import Picamera2
 from cv2 import VideoWriter, VideoWriter_fourcc, destroyAllWindows, waitKey
-from detectLine import DetectLine
-from detectBlackScreen import DetectBlackScreen
+from .detectLine import DetectLine
+from .detectBlackScreen import DetectBlackScreen
 import numpy as np
 
 class Camera(Picamera2):

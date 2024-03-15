@@ -1,4 +1,4 @@
-from parentsMotor import ParentsMotor
+from .parentsMotor import ParentsMotor
 
 class ControlMotor(ParentsMotor) :
     def __init__(self) -> None:
