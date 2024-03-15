@@ -34,3 +34,6 @@ class Fin (ParentsMotor) :
         sleep(3*self.duree)
         self.long()
         self.court()
+
+if __name__ == "__main__":
+    Fin().start()

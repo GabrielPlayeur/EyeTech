@@ -31,3 +31,6 @@ class Accueil (ParentsMotor) :
         self.long()
         self.long()
         self.long()
+
+if __name__ == "__main__":
+    Accueil().start()
