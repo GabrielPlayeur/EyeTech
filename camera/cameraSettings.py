@@ -32,6 +32,13 @@ class Camera(Picamera2):
         print(black.countWhitePixel())
         self.isRecording = not black.isBlack()
 
+    def isBlack(self) -> None:
+        print('Checking...')
+        frame = self.capture_array()
+        black = DetectBlackScreen(frame)
+        print(black.countWhitePixel())
+        return black.isBlack()
+
     def write(self, frame: np.ndarray) -> None:
         self.writer.write(frame[:,:,0:3])
 

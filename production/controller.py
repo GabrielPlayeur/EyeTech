@@ -18,8 +18,8 @@ class Controller:
 
     def waiting(self) -> None:
         print('Waiting')
-        while not self.camera.isRecording:
-            self.camera.checkRecording()
+        while not self.camera.isBlack():
+            pass
 
     def start(self) -> None:
         print('Start')
