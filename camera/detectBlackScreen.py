@@ -22,10 +22,10 @@ class DetectBlackScreen:
     def showImage(self, image: np.ndarray, title: str) -> None:
         cv2.imshow(title, image)
 
-    def showAllImage(self):
+    def showAllImage(self, time=1):
         self.showImage(self.black_image, "img")
         self.showImage(self.black_canny, "canny")
-        cv2.waitKey(1)
+        cv2.waitKey(time)
 
 if __name__ == "__main__":
     from cameraSettings import Camera

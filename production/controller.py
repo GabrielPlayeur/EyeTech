@@ -29,6 +29,6 @@ class Controller:
             coords = self.camera.detectLineInFrame(preview=False, saveOutput=False)
             line = self.linesProcess.output(coords)
             self.controlMotor.set(line)
-            self.camera.checkRecording()
+            self.camera.checkStopRecordingCondition()
         self.camera.stop()
         self.finMotor.start()

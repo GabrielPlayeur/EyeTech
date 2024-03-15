@@ -25,23 +25,20 @@ class Camera(Picamera2):
             self.preview(detectLine)
         return detectLine.lines
 
-    def checkRecording(self) -> None:
+    def checkStopRecordingCondition(self) -> None:
         frame = self.capture_array()
-        black = DetectBlackScreen(frame)
-        self.isRecording = not black.isBlack()
+        self.isRecording = not DetectBlackScreen(frame).isBlack()
 
     def isBlack(self) -> bool:
         frame = self.capture_array()
-        black = DetectBlackScreen(frame)
-        print(black.countWhitePixel())
-        return black.isBlack()
+        return DetectBlackScreen(frame).isBlack()
 
     def write(self, frame: np.ndarray) -> None:
         self.writer.write(frame[:,:,0:3])
 
-    def preview(self, detectLine: DetectLine) -> None:
+    def preview(self, detectLine: DetectLine, ms=1) -> None:
         detectLine.showFinalImage()
-        self.wait()
+        self.wait(ms)
 
     def start(self) -> None:
         self.isRecording = True
@@ -51,6 +48,6 @@ class Camera(Picamera2):
         destroyAllWindows()
         # super().stop()
 
-    def wait(self, exitKey='q', ms=1) -> None:
+    def wait(self, ms, exitKey='q') -> None:
         if waitKey(ms) & 0xFF == ord(exitKey):
             self.isRecording = False
