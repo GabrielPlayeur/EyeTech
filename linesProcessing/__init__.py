@@ -1,1 +1,1 @@
-from linesProcessing.main import LinesProcess
+from linesProcessing.lineProcess import LinesProcess

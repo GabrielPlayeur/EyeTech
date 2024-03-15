@@ -3,8 +3,8 @@ import path
 import sys
 dire = path.Path(__file__).abspath()
 sys.path.append(dire.parent.parent)
-from main import calcul
-from main import output
+from linesProcessing.lineProcess import calcul
+from linesProcessing.lineProcess import output
 import unittest
 
 class TestStringMethods(unittest.TestCase):
