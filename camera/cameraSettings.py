@@ -26,14 +26,11 @@ class Camera(Picamera2):
         return detectLine.lines
 
     def checkRecording(self) -> None:
-        print('Checking...')
         frame = self.capture_array()
         black = DetectBlackScreen(frame)
-        print(black.countWhitePixel())
         self.isRecording = not black.isBlack()
 
-    def isBlack(self) -> None:
-        print('Checking...')
+    def isBlack(self) -> bool:
         frame = self.capture_array()
         black = DetectBlackScreen(frame)
         print(black.countWhitePixel())
