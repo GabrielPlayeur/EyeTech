@@ -14,6 +14,7 @@ class Camera(Picamera2):
         self.configure(self.create_preview_configuration(main=self.config))
         self.writer = VideoWriter(outputFileName, VideoWriter_fourcc(*'mp4v'), self.fps, self.size, True)
         self.isRecording = False
+        super().start()
 
     def detectLineInFrame(self, preview=False, saveOutput=False) -> list[list[int]]:
         frame = self.capture_array()
@@ -25,6 +26,7 @@ class Camera(Picamera2):
         return detectLine.lines
 
     def checkRecording(self) -> None:
+        print('Checking...')
         frame = self.capture_array()
         black = DetectBlackScreen(frame)
         print(black.countWhitePixel())
@@ -39,12 +41,11 @@ class Camera(Picamera2):
 
     def start(self) -> None:
         self.isRecording = True
-        super().start()
 
     def stop(self) -> None:
         self.writer.release()
         destroyAllWindows()
-        super().stop()
+        # super().stop()
 
     def wait(self, exitKey='q', ms=1) -> None:
         if waitKey(ms) & 0xFF == ord(exitKey):
