@@ -25,10 +25,12 @@ class DetectBlackScreen:
     def showAllImage(self):
         self.showImage(self.black_image, "img")
         self.showImage(self.black_canny, "canny")
-        cv2.waitKey(0)
+        cv2.waitKey(1)
 
 if __name__ == "__main__":
-    img = cv2.imread("./test/image/test_image.jpg")
-    d = DetectBlackScreen(img)
-    print(d.countWhitePixel())
-    d.showAllImage()
+    from cameraSettings import Camera
+    while True:
+        img = Camera().capture_array()
+        d = DetectBlackScreen(img)
+        print(d.countWhitePixel())
+        d.showAllImage()
