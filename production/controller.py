@@ -17,11 +17,13 @@ class Controller:
         self.linesProcess = LinesProcess(self.camera.mid)
 
     def waiting(self) -> None:
+        """Looping until camera is cover to create a black screen"""
         print('Waiting')
         while not self.camera.isBlack():
             pass
 
     def start(self) -> None:
+        """Start the process to detect the lines and transmit the value to the motors until the camera is cover to create a black screen"""
         print('Start')
         self.accueilMotor.start()
         self.camera.start()

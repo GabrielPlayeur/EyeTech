@@ -12,6 +12,7 @@ class DetectLine:
         self.lines =  self.get_lines(self.lane_canny) #Find lines
 
     def get_lines(self, image: np.ndarray) -> dict[list[int]]:
+        """Get the position of 2 lines detect on the camera. {'left': [[x1, y1, x2, y2]], 'right': [[x1, y1, x2, y2]]}"""
         lines = cv2.HoughLinesP(image, 2, np.pi/180, 100, np.array([]), minLineLength=40,maxLineGap=5)
         return self.average_slope_intercept(lines)
 

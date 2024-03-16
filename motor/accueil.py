@@ -1,14 +1,13 @@
-from .parentsMotor import ParentsMotor
+from .parentsMotor import ParentsMotor, PWMOutputDevice
 from time import sleep
 
-class Accueil (ParentsMotor) :
-    def __init__(self, vibG, vibD) -> None:
-        super().__init__()
+class Accueil(ParentsMotor):
+    def __init__(self, vibG: PWMOutputDevice, vibD: PWMOutputDevice) -> None:
         self.MG = vibG
         self.MD = vibD
-        self.duree=0.25
+        self.duree = 0.25
 
-    def long (self) -> None: 
+    def long(self) -> None: 
         """tps vibration morse"""
         self.VIBG(1)
         self.VIBD(1)
@@ -16,7 +15,7 @@ class Accueil (ParentsMotor) :
         self.VIBG(0) 
         self.VIBD(0)
 
-    def court (self) -> None:
+    def court(self) -> None:
         """tps vibration morse"""
         self.VIBG(1)
         self.VIBD(1)
@@ -24,7 +23,7 @@ class Accueil (ParentsMotor) :
         self.VIBG(0) 
         self.VIBD(0)
 
-    def start (self) -> None:
+    def start(self) -> None:
         """go en morse"""
         self.long()
         self.long()

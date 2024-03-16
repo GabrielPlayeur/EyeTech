@@ -1,10 +1,8 @@
 from .parentsMotor import ParentsMotor
 
-class ControlMotor(ParentsMotor) :
-    def __init__(self) -> None:
-        super().__init__()
-
+class ControlMotor(ParentsMotor):
     def set(self, line: int) -> None:
+        """Set the motors power to a specific value base on the line given"""
         if line == 0 :
             self.VIBD(0)
             self.VIBG(0)
