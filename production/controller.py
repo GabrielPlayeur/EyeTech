@@ -17,7 +17,7 @@ class Controller:
         self.linesProcess = LinesProcess(self.camera.mid)
 
     def waiting(self) -> None:
-        """Looping until camera is cover to create a black screen"""
+        """Looping until the camera frame is cover to be seen as a black screen"""
         print('Waiting')
         while not self.camera.isBlack():
             pass

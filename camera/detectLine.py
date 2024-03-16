@@ -17,6 +17,7 @@ class DetectLine:
         return self.average_slope_intercept(lines)
 
     def make_points(self, line: np.ndarray) -> list[int]:
+        """Return the position of a line given by a equation. [x1, y1, x2, y2]"""
         if not isinstance(line, np.ndarray):
             return [[300, self.image.shape[0], 300, self.image.shape[0]]]
         slope, intercept = line
@@ -29,6 +30,7 @@ class DetectLine:
         return [x1, y1, x2, y2]
 
     def average_slope_intercept(self, lines: np.ndarray) -> dict[list[int]]:
+        """Return the average of all the found lines to return only 2 lines. {'left': [x1, y1, x2, y2], 'right': [x1, y1, x2, y2]}"""
         left_fit = []
         right_fit = []
         if lines is None:
@@ -50,11 +52,13 @@ class DetectLine:
         return averaged_lines
 
     def canny(self, image: np.ndarray) -> np.ndarray:
+        """return the frame with a gradian apply"""
         gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
         canny = cv2.Canny(gray, 50, 150)
         return canny
 
     def display_lines(self, image: np.ndarray, lines: dict[list[int]]) -> np.ndarray:
+        """Return the 2 found lines in a image type"""
         line_image = np.zeros_like(image)
         if lines is not None:
             for x1, y1, x2, y2 in lines.values():
@@ -62,6 +66,7 @@ class DetectLine:
         return line_image
 
     def region_of_interest(self, canny: np.ndarray) -> np.ndarray:
+        """Crop the frame to return only the desired region. The shape is similare to a triangle."""
         height = canny.shape[0]
         width = canny.shape[1]
         mask = np.zeros_like(canny)
@@ -74,12 +79,15 @@ class DetectLine:
         return masked_image
 
     def getFinalImage(self) -> np.ndarray:
+        """Return the final frame with the lines found added"""
         line_image = self.display_lines(self.lane_image, self.lines)
         combo_image = cv2.addWeighted(self.image, 0.8, line_image, 1, 0)
         return combo_image
 
     def showImage(self, image: np.ndarray, title: str) -> None:
+        """Display the frame in cv2 windows"""
         cv2.imshow(title, image)
 
     def showFinalImage(self) -> None:
+        """Display the final frame state in cv2 windows"""
         self.showImage(self.getFinalImage(), "result")
