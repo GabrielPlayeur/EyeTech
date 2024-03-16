@@ -13,10 +13,6 @@ def test_imageTransf():
     d.showImage(d.lane_canny,"canny")
     d.showImage(d.cropped_canny,"region_of_interest")
     d.showFinalImage()
-    
-    line_image = d.display_lines(d.lane_image, d.lines)
-    # combo_image = cv2.addWeighted(d.lane_canny, 0.8, line_image, 1, 0)
-    d.showImage(line_image,"test")
     cv2.waitKey(0)
 
 def test_lines():

@@ -9,14 +9,14 @@ class DetectLine:
         self.lane_image = np.copy(self.image)
         self.lane_canny = self.canny(self.lane_image) #Search every line with gradiant
         self.cropped_canny = self.region_of_interest(self.lane_canny) #Croppe image
-        self.lines =  self.get_lines(self.lane_canny) #Find lines
+        self.lines =  self.get_lines(self.cropped_canny) #Find lines
 
     def get_lines(self, image: np.ndarray) -> dict[list[int]]:
-        """Get the position of 2 lines detect on the camera. {'left': [[x1, y1, x2, y2]], 'right': [[x1, y1, x2, y2]]}"""
+        """Get the position of 2 lines detect on the camera. {'left': [x1, y1, x2, y2], 'right': [x1, y1, x2, y2]}"""
         lines = cv2.HoughLinesP(image, 2, np.pi/180, 100, np.array([]), minLineLength=40,maxLineGap=5)
         return self.average_slope_intercept(lines)
 
-    def make_points(self, line: np.ndarray) -> list[list[int]]:
+    def make_points(self, line: np.ndarray) -> list[int]:
         if not isinstance(line, np.ndarray):
             return [[300, self.image.shape[0], 300, self.image.shape[0]]]
         slope, intercept = line
@@ -26,7 +26,7 @@ class DetectLine:
         y2 = int(y1*3/5)
         x1 = int((y1 - intercept)/slope)
         x2 = int((y2 - intercept)/slope)
-        return [[x1, y1, x2, y2]]
+        return [x1, y1, x2, y2]
 
     def average_slope_intercept(self, lines: np.ndarray) -> dict[list[int]]:
         left_fit = []
@@ -57,9 +57,8 @@ class DetectLine:
     def display_lines(self, image: np.ndarray, lines: dict[list[int]]) -> np.ndarray:
         line_image = np.zeros_like(image)
         if lines is not None:
-            for line in lines.values():
-                for x1, y1, x2, y2 in line:
-                    cv2.line(line_image,(x1,y1),(x2,y2),(255,0,0),10)
+            for x1, y1, x2, y2 in lines.values():
+                cv2.line(line_image,(x1,y1),(x2,y2),(255,0,0),10)
         return line_image
 
     def region_of_interest(self, canny: np.ndarray) -> np.ndarray:
