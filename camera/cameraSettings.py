@@ -54,7 +54,11 @@ class Camera(Picamera2):
         self.isRecording = False
         self.writer.release()
         destroyAllWindows()
-        # super().stop()
+
+    def shutdown(self) -> None:
+        """Stop the camera recording and writing and close all the visual window."""
+        self.stop()
+        super().stop()
 
     def wait(self, ms, exitKey='q') -> None:
         """Wait the time in ms second to slow tthe display (for freeze ms=0). If the exit key is press in this interval the recording stop."""

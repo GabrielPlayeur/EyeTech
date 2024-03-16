@@ -1,5 +1,6 @@
 import path
 import sys
+import os
 directory = path.Path(__file__).abspath()
 sys.path.append(directory.parent.parent)
 from camera import Camera
@@ -34,3 +35,8 @@ class Controller:
             self.camera.checkStopRecordingCondition()
         self.camera.stop()
         self.finMotor.start()
+
+    def shutdown(self) -> None:
+        """Shutdown the raspberry to prepare it for disconnection"""
+        self.camera.shutdown()
+        os.system('sudo halt')
