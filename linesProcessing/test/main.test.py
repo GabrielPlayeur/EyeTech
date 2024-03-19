@@ -3,7 +3,7 @@ import path
 import sys
 dire = path.Path(__file__).abspath()
 sys.path.append(dire.parent.parent)
-from main import LinesProcess as lines
+from lineProcess import LinesProcess as lines
 import unittest
 a=lines(400)
 class TestStringMethods(unittest.TestCase):
