@@ -35,6 +35,7 @@ class Controller:
             self.camera.checkStopRecordingCondition()
         self.camera.stop()
         self.finMotor.start()
+        print('Stop')
 
     def shutdown(self) -> None:
         """Shutdown the raspberry to prepare it for disconnection"""

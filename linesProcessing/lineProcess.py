@@ -8,7 +8,6 @@ class LinesProcess:
         self.delay = 0.5
 
     def calcul(self, lignes: dict) -> list:
-        print(lignes)
         if lignes["right"][1] >= lignes["right"][3]:
             minXRight = lignes["right"][2]
         else:
