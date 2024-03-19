@@ -28,6 +28,7 @@ class Controller:
         while self.camera.isBlack():
             if time()-startTime>3:
                 self.isRunning = False
+                return
 
     def start(self) -> None:
         """Start the process to detect the lines and transmit the value to the motors until the camera is cover to create a black screen"""
