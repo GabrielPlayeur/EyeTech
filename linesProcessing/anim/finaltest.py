@@ -229,7 +229,3 @@ class Hough(Scene):
         self.wait()
         self.play(Create(dashed_line))
         self.wait()
-
-
-
-
