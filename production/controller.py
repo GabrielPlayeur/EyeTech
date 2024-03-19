@@ -25,6 +25,7 @@ class Controller:
         while not self.camera.isBlack():
             pass
         startTime = time()
+        #TODO : vibration timer
         while self.camera.isBlack():
             if time()-startTime>3:
                 self.isRunning = False
@@ -47,5 +48,6 @@ class Controller:
     def shutdown(self) -> None:
         """Shutdown the raspberry to prepare it for disconnection"""
         print("Shutting down")
+        #TODO : vibration shutdown
         self.camera.shutdown()
         os.system('sudo halt')
