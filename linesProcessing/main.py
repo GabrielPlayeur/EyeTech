@@ -3,7 +3,7 @@ from functools import reduce
 
 class LinesProcess:
     def __init__(self, milieu: int) -> None:
-        self.milieu = milieu
+        self.milieu = milieu #404
         self.queue = []
         self.delay = 0.5
 
