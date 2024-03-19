@@ -17,17 +17,17 @@ class Controller:
         self.finMotor = Fin(self.parentMotor.MG,self.parentMotor.MD)
         self.controlMotor = ControlMotor(self.parentMotor.MG,self.parentMotor.MD)
         self.linesProcess = LinesProcess(self.camera.mid)
-        self.time = time()
+        self.isRunning = True
 
     def waiting(self) -> None:
         """Looping until the camera frame is cover to be seen as a black screen"""
         print('Waiting')
-        self.time=time()
         while not self.camera.isBlack():
-            self.time=time()
+            pass
+        startTime = time()
         while self.camera.isBlack():
-            if time()-self.time>3:
-                self.shutdown()
+            if time()-startTime>3:
+                self.isRunning = False
 
     def start(self) -> None:
         """Start the process to detect the lines and transmit the value to the motors until the camera is cover to create a black screen"""
@@ -45,5 +45,6 @@ class Controller:
 
     def shutdown(self) -> None:
         """Shutdown the raspberry to prepare it for disconnection"""
+        print("Shutting down")
         self.camera.shutdown()
         os.system('sudo halt')

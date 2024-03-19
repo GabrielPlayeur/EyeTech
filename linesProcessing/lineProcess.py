@@ -1,5 +1,4 @@
 from time import time
-from functools import reduce
 
 class LinesProcess:
     def __init__(self, milieu: int) -> None:
