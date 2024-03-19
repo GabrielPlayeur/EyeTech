@@ -14,7 +14,7 @@ class Controller:
         self.parentMotor.setPin()
         self.accueilMotor = Accueil(self.parentMotor.MG,self.parentMotor.MD)
         self.finMotor = Fin(self.parentMotor.MG,self.parentMotor.MD)
-        self.controlMotor = ControlMotor()
+        self.controlMotor = ControlMotor(self.parentMotor.MG,self.parentMotor.MD)
         self.linesProcess = LinesProcess(self.camera.mid)
 
     def waiting(self) -> None:

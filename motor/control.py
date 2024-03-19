@@ -1,6 +1,10 @@
-from .parentsMotor import ParentsMotor
+from .parentsMotor import ParentsMotor, PWMOutputDevice
 
 class ControlMotor(ParentsMotor):
+    def __init__(self, vibG: PWMOutputDevice, vibD: PWMOutputDevice) -> None:
+        self.MG = vibG
+        self.MD = vibD
+
     def set(self, line: int) -> None:
         """Set the motors power to a specific value base on the line given"""
         if line == 0 :
