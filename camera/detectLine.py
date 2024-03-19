@@ -34,7 +34,7 @@ class DetectLine:
         left_fit = []
         right_fit = []
         if lines is None:
-            return None
+            return {"left": [0,0,0,0], "right": [1,1,1,1]}
         for line in lines:
             for x1, y1, x2, y2 in line:
                 fit = np.polyfit((x1,x2), (y1,y2), 1)
