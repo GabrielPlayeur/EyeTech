@@ -19,7 +19,7 @@ class DetectLine:
     def make_points(self, line: np.ndarray) -> list[int]:
         """Return the position of a line given by a equation. [x1, y1, x2, y2]"""
         if not isinstance(line, np.ndarray):
-            return [[300, self.image.shape[0], 300, self.image.shape[0]]]
+            return [300, self.image.shape[0], 300, self.image.shape[0]]
         slope, intercept = line
         if  -0.01 <= slope <= 0.01:
             return [[0, 0, 10, 10]]
@@ -34,7 +34,7 @@ class DetectLine:
         left_fit = []
         right_fit = []
         if lines is None:
-            return {"left": [0,0,0,0], "right": [1,1,1,1]}
+            return {"left": [0,0,0,0], "right": [800,800,800,800]}
         for line in lines:
             for x1, y1, x2, y2 in line:
                 fit = np.polyfit((x1,x2), (y1,y2), 1)
