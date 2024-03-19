@@ -1,6 +1,7 @@
 import path
 import sys
 import os
+from time import time
 directory = path.Path(__file__).abspath()
 sys.path.append(directory.parent.parent)
 from camera import Camera
@@ -16,12 +17,17 @@ class Controller:
         self.finMotor = Fin(self.parentMotor.MG,self.parentMotor.MD)
         self.controlMotor = ControlMotor(self.parentMotor.MG,self.parentMotor.MD)
         self.linesProcess = LinesProcess(self.camera.mid)
+        self.time = time()
 
     def waiting(self) -> None:
         """Looping until the camera frame is cover to be seen as a black screen"""
         print('Waiting')
+        self.time=time()
         while not self.camera.isBlack():
-            pass
+            self.time=time()
+        while self.camera.isBlack():
+            if time()-self.time>3:
+                self.shutdown()
 
     def start(self) -> None:
         """Start the process to detect the lines and transmit the value to the motors until the camera is cover to create a black screen"""
