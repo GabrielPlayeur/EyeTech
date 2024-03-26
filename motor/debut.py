@@ -1,7 +1,7 @@
 from .parentsMotor import ParentsMotor, PWMOutputDevice
 from time import sleep
 
-class Accueil(ParentsMotor):
+class Debut(ParentsMotor):
     def __init__(self, vibG: PWMOutputDevice, vibD: PWMOutputDevice) -> None:
         self.MG = vibG
         self.MD = vibD
@@ -34,4 +34,4 @@ class Accueil(ParentsMotor):
         self.long()
 
 if __name__ == "__main__":
-    Accueil().start()
+    Debut().start()
