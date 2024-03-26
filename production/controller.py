@@ -6,14 +6,14 @@ directory = path.Path(__file__).abspath()
 sys.path.append(directory.parent.parent)
 from camera import Camera
 from linesProcessing import LinesProcess
-from motor import ControlMotor, Accueil, Fin, ParentsMotor
+from motor import ControlMotor, Debut, Fin, ParentsMotor
 
 class Controller:
     def __init__(self) -> None:
         self.camera = Camera()
         self.parentMotor = ParentsMotor()
         self.parentMotor.setPin()
-        self.accueilMotor = Accueil(self.parentMotor.MG,self.parentMotor.MD)
+        self.debutMotor = Debut(self.parentMotor.MG,self.parentMotor.MD)
         self.finMotor = Fin(self.parentMotor.MG,self.parentMotor.MD)
         self.controlMotor = ControlMotor(self.parentMotor.MG,self.parentMotor.MD)
         self.linesProcess = LinesProcess(self.camera.mid)
@@ -34,7 +34,7 @@ class Controller:
     def start(self) -> None:
         """Start the process to detect the lines and transmit the value to the motors until the camera is cover to create a black screen"""
         print('Start')
-        self.accueilMotor.start()
+        self.debutMotor.start()
         self.camera.start()
         while self.camera.isRecording:
             coords = self.camera.detectLineInFrame(preview=False, saveOutput=False)
