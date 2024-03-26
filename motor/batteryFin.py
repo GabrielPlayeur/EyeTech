@@ -6,11 +6,10 @@ class Battery(ParentsMotor):
         super().__init__()
         self.condEnd = 0
     def getVoltage (self):
-        sensorValue = ##le nom du pin qu'on utilise
-        voltageValue = sensorValue * (3.3 / 65535) ##Conversion de la valeur en volt
+        sensorValue = 0 #le nom du pin qu on utilise
+        voltageValue = sensorValue * (3.3 / 65535) #Conversion de la valeur en volt
         return (voltageValue)
-    
-   
+       
     def endOfTime (self):
         if self.getVoltage() <= 3.4 and self.getVoltage() >= 3.3 and self.condEnd ==1:
             self.VIBG(1)
@@ -19,7 +18,9 @@ class Battery(ParentsMotor):
             self.VIBG(0) 
             self.VIBD(0)
             self.condEnd = 0
-        return None
+    
+if __name__ == "__main__":
+    bat = Battery()
     while True :
-        endOfTime()
+        bat.endOfTime()
         sleep(1)
