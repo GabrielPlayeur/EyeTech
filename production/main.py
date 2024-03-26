@@ -1,7 +1,7 @@
 from controller import Controller
 
 controller = Controller()
-#TODO : vibration debut
+controller.onMotor.start()
 controller.waiting()
 while controller.isRunning:
     controller.start()

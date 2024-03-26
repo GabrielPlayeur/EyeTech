@@ -8,8 +8,7 @@ class Attention(ParentsMotor):
         self.MD = vibD
         self.duree = 0.25
 
-
-    def attention(self) -> None:
+    def start(self) -> None:
         """vibration du attention"""
         self.VIBG(1)
         self.VIBD(1)
@@ -26,9 +25,6 @@ class Attention(ParentsMotor):
         self.VIBG(1)
         self.VIBD(1)
         sleep(0.5*self.duree)
-        
-        
-        
-        
+
 if __name__ == "__main__":
     Attention().start()

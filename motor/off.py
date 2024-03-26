@@ -8,7 +8,6 @@ class Off(ParentsMotor):
         self.MD = vibD
         self.duree = 0.25
 
-
     def start(self) -> None:
         """vibration du Off"""
         self.VIBG(1)
@@ -29,9 +28,6 @@ class Off(ParentsMotor):
         sleep(2*self.duree)
         self.VIBG(0)
         self.VIBD(0)
-        
-        
-        
-        
+
 if __name__ == "__main__":
     Off().start()

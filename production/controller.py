@@ -6,7 +6,7 @@ directory = path.Path(__file__).abspath()
 sys.path.append(directory.parent.parent)
 from camera import Camera
 from linesProcessing import LinesProcess
-from motor import ControlMotor, Debut, Fin, ParentsMotor
+from motor import ControlMotor, Debut, Fin, On, Off, Attention, ParentsMotor
 
 class Controller:
     def __init__(self) -> None:
@@ -15,6 +15,9 @@ class Controller:
         self.parentMotor.setPin()
         self.debutMotor = Debut(self.parentMotor.MG,self.parentMotor.MD)
         self.finMotor = Fin(self.parentMotor.MG,self.parentMotor.MD)
+        self.onMotor = On(self.parentMotor.MG,self.parentMotor.MD)
+        self.offMotor = Off(self.parentMotor.MG,self.parentMotor.MD)
+        self.attentionMotor = Attention(self.parentMotor.MG,self.parentMotor.MD)
         self.controlMotor = ControlMotor(self.parentMotor.MG,self.parentMotor.MD)
         self.linesProcess = LinesProcess(self.camera.mid)
         self.isRunning = True
@@ -25,7 +28,7 @@ class Controller:
         while not self.camera.isBlack():
             pass
         startTime = time()
-        #TODO : vibration timer
+        self.attentionMotor.start()
         while self.camera.isBlack():
             if time()-startTime>3:
                 self.isRunning = False
@@ -48,6 +51,6 @@ class Controller:
     def shutdown(self) -> None:
         """Shutdown the raspberry to prepare it for disconnection"""
         print("Shutting down")
-        #TODO : vibration shutdown
+        self.offMotor.start()
         self.camera.shutdown()
         os.system('sudo halt')
