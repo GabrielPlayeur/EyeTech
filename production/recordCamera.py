@@ -14,6 +14,7 @@ class Record:
         self.cam.fps = 15
 
     def start(self, sec=10):
+        print('-----------------GO------------------------')
         startTime = time()
         while time()-startTime < sec:
             frame = self.cam.capture_array()

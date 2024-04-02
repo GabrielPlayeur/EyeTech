@@ -22,7 +22,7 @@ class DetectLine:
             return [300, self.image.shape[0], 300, self.image.shape[0]]
         slope, intercept = line
         if  -0.01 <= slope <= 0.01:
-            return [[0, 0, 10, 10]]
+            return [0, 0, 10, 10]
         y1 = int(self.image.shape[0])
         y2 = int(y1*3/5)
         x1 = int((y1 - intercept)/slope)
@@ -54,7 +54,7 @@ class DetectLine:
     def canny(self, image: np.ndarray) -> np.ndarray:
         """return the frame with a gradian apply"""
         gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
-        canny = cv2.Canny(gray, 50, 150)
+        canny = cv2.Canny(gray, 20, 50)
         return canny
 
     def display_lines(self, image: np.ndarray, lines: dict[list[int]]) -> np.ndarray:
