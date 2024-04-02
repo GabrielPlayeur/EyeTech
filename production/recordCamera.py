@@ -1,4 +1,11 @@
-from camera.cameraSettings import Camera
+import path
+import sys
+from time import time
+directory = path.Path(__file__).abspath()
+sys.path.append(directory.parent.parent)
+directory = path.Path(__file__).abspath()
+sys.path.append(directory.parent.parent)
+from camera import Camera
 from time import time
 
 class Record:
