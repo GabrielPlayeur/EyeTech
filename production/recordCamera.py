@@ -11,9 +11,9 @@ from time import time
 class Record:
     def __init__(self) -> None:
         self.cam = Camera()
-        self.cam.fps = 5
+        self.cam.fps = 15
 
-    def start(self, sec=30):
+    def start(self, sec=10):
         startTime = time()
         while time()-startTime < sec:
             frame = self.cam.capture_array()
