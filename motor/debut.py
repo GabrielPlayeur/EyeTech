@@ -34,4 +34,6 @@ class Debut(ParentsMotor):
         self.long()
 
 if __name__ == "__main__":
-    Debut().start()
+    p = ParentsMotor()
+    p.setPin()
+    Debut(p.MG, p.MD).start()
