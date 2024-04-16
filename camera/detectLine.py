@@ -15,9 +15,8 @@ class DetectLine:
         """Get the position of 2 lines detect on the camera. {'left': [x1, y1, x2, y2], 'right': [x1, y1, x2, y2]}"""
         lines = cv2.HoughLinesP(image, 2, np.pi/180, 100, np.array([]), minLineLength=40,maxLineGap=5)
         linesAverage = self.average_slope_intercept(lines)
-        # fixLines = self.fixLineMissing(self.lane_canny, linesAverage)
-        # print(fixLines)
-        return linesAverage
+        fixLines = self.fixLineMissing(self.lane_canny, linesAverage)
+        return fixLines
 
     def make_points(self, line: np.ndarray) -> list[int]:
         """Return the position of a line given by a equation. [x1, y1, x2, y2]"""
@@ -34,7 +33,7 @@ class DetectLine:
 
     def findLinePos(self, line: np.ndarray) -> str:
         """Return if given line is the right or the left one"""
-        if line==[0,0,10,10]:
+        if line==[0,0,10,10] or line==[300, 606, 300, 606]:
             return "none"
         return "left" if line[0]<line[2] else "right"
 
@@ -59,7 +58,7 @@ class DetectLine:
         second_line = self.make_points(second_fit_average)
         first_key = self.findLinePos(first_line)
         second_key = self.findLinePos(second_line)
-        averaged_lines = {first_key: first_fit, second_key: second_line}
+        averaged_lines = {first_key: first_line, second_key: second_line}
         return averaged_lines
 
     def fixLineMissing(self, canny: np.ndarray,  averaged_lines: dict) -> dict[list[int]]:
@@ -67,18 +66,20 @@ class DetectLine:
         if not "none" in averaged_lines.keys(): #No missing lines
             return averaged_lines
         if averaged_lines.get("right"): #Missing left line
-            cropped = self.region_of_interest(canny, region="left")
+            key = 'left'
         elif averaged_lines.get('left'): #Missing right line
-            cropped = self.region_of_interest(canny, region="right")
+            key = "right"
         else: #Missing both line
-            pass
+            return {"left":[0,0,10,10], "right":[0,0,10,10]}
+        print(key, averaged_lines)
+        cropped = self.region_of_interest(canny, region=key)
         lines = cv2.HoughLinesP(cropped, 2, np.pi/180, 100, np.array([]), minLineLength=40,maxLineGap=5)
         fixLines = self.average_slope_intercept(lines)
-        if not "none" in fixLines.keys(): #All line find
-            return  fixLines
-        fixLines["left" if fixLines.get("right") else "right"] =  fixLines['none']
-        del fixLines['none']
-        return fixLines
+        if  ["none","none"] ==  list(fixLines.keys()): #All line find
+            return  averaged_lines
+        averaged_lines[key] =  fixLines['right'] if fixLines.get("right") else fixLines['left']
+        del averaged_lines['none']
+        return averaged_lines
 
     def canny(self, image: np.ndarray) -> np.ndarray:
         """return the frame with a gradian apply"""
@@ -110,12 +111,12 @@ class DetectLine:
             case "left":
                 triangle = np.array([[
                 (0, height),
-                (width//2, height//2),
-                (width, height),]], np.int32)
+                (0, height//2),
+                (width//2, height),]], np.int32)
             case "right":
                 triangle = np.array([[
-                (0, height),
-                (width//2, height//2),
+                (width//2, height),
+                (width, height//2),
                 (width, height),]], np.int32)
             case "mid" | _:
                 triangle = np.array([[
