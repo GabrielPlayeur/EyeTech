@@ -5,6 +5,9 @@ sys.path.append(directory.parent.parent.parent)
 from detectLine import DetectLine
 import cv2
 
+PATH_IMG = "../image/"
+c=0
+
 size = (800,400)
 cap = cv2.VideoCapture(f"{sys.argv[1]}.mp4")
 while(cap.isOpened()):
@@ -16,7 +19,10 @@ while(cap.isOpened()):
     d.showImage(d.lane_canny, "lane canny")
     d.showImage(d.getFinalImage(), "combo")
     print(d.lines, d.cropped_canny.shape)
-    if cv2.waitKey(0) & 0xFF == ord('q'):
-        break
+    if cv2.waitKey(0) & 0xFF == ord('s'):
+            break
+    # if cv2.waitKey(0) & 0xFF == ord('s'):
+    #     cv2.imwrite(PATH_IMG+f"img{c}.jpg", frame)
+    #     c+=1
 cap.release()
 cv2.destroyAllWindows()

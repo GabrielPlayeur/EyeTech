@@ -71,7 +71,6 @@ class DetectLine:
             key = "right"
         else: #Missing both line
             return {"left":[0,0,10,10], "right":[0,0,10,10]}
-        print(key, averaged_lines)
         cropped = self.region_of_interest(canny, region=key)
         lines = cv2.HoughLinesP(cropped, 2, np.pi/180, 100, np.array([]), minLineLength=40,maxLineGap=5)
         fixLines = self.average_slope_intercept(lines)
