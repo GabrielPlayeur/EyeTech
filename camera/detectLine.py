@@ -62,7 +62,7 @@ class DetectLine:
         return averaged_lines
 
     def fixLineMissing(self, canny: np.ndarray,  averaged_lines: dict) -> dict[list[int]]:
-        """TODO"""
+        """Try to identify lane in the side where nothing got find by using an other region of interest"""
         if not "none" in averaged_lines.keys(): #No missing lines
             return averaged_lines
         if averaged_lines.get("right"): #Missing left line
@@ -74,7 +74,7 @@ class DetectLine:
         cropped = self.region_of_interest(canny, region=key)
         lines = cv2.HoughLinesP(cropped, 2, np.pi/180, 100, np.array([]), minLineLength=40,maxLineGap=5)
         fixLines = self.average_slope_intercept(lines)
-        if  ["none","none"] ==  list(fixLines.keys()): #All line find
+        if  ["none","none"] ==  list(fixLines.keys()): #no newline find
             return  averaged_lines
         averaged_lines[key] =  fixLines['right'] if fixLines.get("right") else fixLines['left']
         del averaged_lines['none']
@@ -103,7 +103,7 @@ class DetectLine:
         return masked_image
 
     def selectRegionShape(self, canny: np.ndarray, region: str) -> np.array:
-        """TODO"""
+        """Return the select shape base on the region name"""
         height = canny.shape[0]
         width = canny.shape[1]
         match region:
