@@ -20,6 +20,15 @@ def test_lines():
     d = DetectLine(frame)
     print(f"Lines: {d.lines}")
 
+def test_linePos():
+    frame = cv2.imread(PATH_IMG+"test_image.jpg")
+    l = DetectLine(frame).findLinePos([78, 606, 249, 363])
+    r = DetectLine(frame).findLinePos([560, 606, 489, 363])
+    print(l, r)
+    assert l == "left"
+    assert r == "right"
+
 if __name__ == "__main__":
     test_imageTransf()
     test_lines()
+    test_linePos()
