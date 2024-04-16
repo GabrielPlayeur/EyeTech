@@ -54,7 +54,7 @@ class DetectLine:
     def canny(self, image: np.ndarray) -> np.ndarray:
         """return the frame with a gradian apply"""
         gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
-        canny = cv2.Canny(gray, 20, 50)
+        canny = cv2.Canny(gray, 50, 75)
         return canny
 
     def display_lines(self, image: np.ndarray, lines: dict[list[int]]) -> np.ndarray:
