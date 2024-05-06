@@ -6,33 +6,38 @@ directory = path.Path(__file__).abspath()
 sys.path.append(directory.parent.parent)
 from camera import Camera
 from linesProcessing import LinesProcess
-from motor import ControlMotor, Accueil, Fin, ParentsMotor
+from motor import ControlMotor, Debut, Fin, On, Off, Attention, ParentsMotor
 
 class Controller:
     def __init__(self) -> None:
         self.camera = Camera()
         self.parentMotor = ParentsMotor()
         self.parentMotor.setPin()
-        self.accueilMotor = Accueil(self.parentMotor.MG,self.parentMotor.MD)
+        self.debutMotor = Debut(self.parentMotor.MG,self.parentMotor.MD)
         self.finMotor = Fin(self.parentMotor.MG,self.parentMotor.MD)
-        self.controlMotor = ControlMotor()
+        self.onMotor = On(self.parentMotor.MG,self.parentMotor.MD)
+        self.offMotor = Off(self.parentMotor.MG,self.parentMotor.MD)
+        self.attentionMotor = Attention(self.parentMotor.MG,self.parentMotor.MD)
+        self.controlMotor = ControlMotor(self.parentMotor.MG,self.parentMotor.MD)
         self.linesProcess = LinesProcess(self.camera.mid)
-        self.time = time()
+        self.isRunning = True
 
     def waiting(self) -> None:
         """Looping until the camera frame is cover to be seen as a black screen"""
         print('Waiting')
-        self.time=time()
         while not self.camera.isBlack():
-            self.time=time()
+            pass
+        startTime = time()
+        self.attentionMotor.start()
         while self.camera.isBlack():
-            if time()-self.time>3:
-                self.shutdown()
+            if time()-startTime>3:
+                self.isRunning = False
+                return
 
     def start(self) -> None:
         """Start the process to detect the lines and transmit the value to the motors until the camera is cover to create a black screen"""
         print('Start')
-        self.accueilMotor.start()
+        self.debutMotor.start()
         self.camera.start()
         while self.camera.isRecording:
             coords = self.camera.detectLineInFrame(preview=False, saveOutput=False)
@@ -41,8 +46,11 @@ class Controller:
             self.camera.checkStopRecordingCondition()
         self.camera.stop()
         self.finMotor.start()
+        print('Stop')
 
     def shutdown(self) -> None:
         """Shutdown the raspberry to prepare it for disconnection"""
+        print("Shutting down")
+        self.offMotor.start()
         self.camera.shutdown()
         os.system('sudo halt')

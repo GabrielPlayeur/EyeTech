@@ -19,10 +19,10 @@ class DetectLine:
     def make_points(self, line: np.ndarray) -> list[int]:
         """Return the position of a line given by a equation. [x1, y1, x2, y2]"""
         if not isinstance(line, np.ndarray):
-            return [[300, self.image.shape[0], 300, self.image.shape[0]]]
+            return [300, self.image.shape[0], 300, self.image.shape[0]]
         slope, intercept = line
         if  -0.01 <= slope <= 0.01:
-            return [[0, 0, 10, 10]]
+            return [0, 0, 10, 10]
         y1 = int(self.image.shape[0])
         y2 = int(y1*3/5)
         x1 = int((y1 - intercept)/slope)
@@ -34,7 +34,7 @@ class DetectLine:
         left_fit = []
         right_fit = []
         if lines is None:
-            return None
+            return {"left": [0,0,0,0], "right": [800,800,800,800]}
         for line in lines:
             for x1, y1, x2, y2 in line:
                 fit = np.polyfit((x1,x2), (y1,y2), 1)
@@ -54,7 +54,7 @@ class DetectLine:
     def canny(self, image: np.ndarray) -> np.ndarray:
         """return the frame with a gradian apply"""
         gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
-        canny = cv2.Canny(gray, 50, 150)
+        canny = cv2.Canny(gray, 50, 75)
         return canny
 
     def display_lines(self, image: np.ndarray, lines: dict[list[int]]) -> np.ndarray:

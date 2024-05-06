@@ -5,13 +5,18 @@ sys.path.append(directory.parent.parent.parent)
 from detectLine import DetectLine
 import cv2
 
+<<<<<<< HEAD
 cap = cv2.VideoCapture(f"{sys.argv[0]}.mp4")
+=======
+size = (800,400)
+cap = cv2.VideoCapture(f"{sys.argv[1]}.mp4")
+>>>>>>> d597cb7613b2f07aafe702f091424899196d3b3b
 while(cap.isOpened()):
     _, frame = cap.read()
     d = DetectLine(frame)
-    d.showImage(cv2.resize(d.cropped_canny, (300, 500)), "canny")
-    d.showImage(cv2.resize(d.lane_canny, (300, 500)), "lane canny")
-    d.showImage(cv2.resize(d.getFinalImage(), (300, 500)), "combo")
+    d.showImage(d.cropped_canny, "canny")
+    d.showImage(d.lane_canny, "lane canny")
+    d.showImage(d.getFinalImage(), "combo")
     print(d.lines, d.cropped_canny.shape)
     if cv2.waitKey(0) & 0xFF == ord('q'):
         break

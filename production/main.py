@@ -1,7 +1,9 @@
 from controller import Controller
-from time import time
+
 controller = Controller()
-while True:
-    controller.waiting()
+controller.onMotor.start()
+controller.waiting()
+while controller.isRunning:
     controller.start()
-    controller.shutdown()
+    controller.waiting()
+controller.shutdown()
