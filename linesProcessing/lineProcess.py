@@ -19,14 +19,14 @@ class LinesProcess:
             return [0,0]
 
         if lignes["right"][1] >= lignes["right"][3]:
-            minXRight = lignes["right"][2]
-        else:
             minXRight = lignes["right"][0]
+        else:
+            minXRight = lignes["right"][2]
 
         if lignes["left"][1]>=lignes["left"][3]:
-            minXLeft = lignes["left"][2]
-        else:
             minXLeft = lignes["left"][0]
+        else:
+            minXLeft = lignes["left"][2]
 
         center = (minXRight+minXLeft)/2
         if center >= self.milieu:

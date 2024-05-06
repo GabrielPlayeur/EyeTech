@@ -5,7 +5,7 @@ sys.path.append(directory.parent.parent.parent)
 from detectLine import DetectLine
 import cv2
 
-cap = cv2.VideoCapture(f"{sys.argv[1]}.mp4")
+cap = cv2.VideoCapture(f"{sys.argv[0]}.mp4")
 while(cap.isOpened()):
     _, frame = cap.read()
     d = DetectLine(frame)
