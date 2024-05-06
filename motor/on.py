@@ -1,4 +1,3 @@
-
 from .parentsMotor import ParentsMotor, PWMOutputDevice
 from time import sleep
 
