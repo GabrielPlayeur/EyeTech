@@ -42,6 +42,33 @@ def test_imageTransfTurn():
     d.showFinalImage()
     cv2.waitKey(0)
 
+def test_image1():
+    frame = cv2.imread(PATH_IMG+"image_1.png")
+    d = DetectLine(frame)
+    d.showImage(d.lane_canny,"canny")
+    d.showImage(d.cropped_canny,"region_of_interest")
+    d.showImage(d.region_of_interest(d.lane_canny, region="right"), "crop right")
+    d.showFinalImage()
+    cv2.waitKey(0)
+
+def test_image2():
+    frame = cv2.imread(PATH_IMG+"image_2.jpg")
+    d = DetectLine(frame)
+    d.showImage(d.lane_canny,"canny")
+    d.showImage(d.cropped_canny,"region_of_interest")
+    d.showImage(d.region_of_interest(d.lane_canny, region="right"), "crop right")
+    d.showFinalImage()
+    cv2.waitKey(0)
+
+def test_image3():
+    frame = cv2.imread(PATH_IMG+"image3.png")
+    d = DetectLine(frame)
+    d.showImage(d.lane_canny,"canny")
+    d.showImage(d.cropped_canny,"region_of_interest")
+    d.showImage(d.region_of_interest(d.lane_canny, region="right"), "crop right")
+    d.showFinalImage()
+    cv2.waitKey(0)
+
 def test_lines():
     frame = cv2.imread(PATH_IMG+"test_img_mid.jpg")
     d = DetectLine(frame)
@@ -60,5 +87,8 @@ if __name__ == "__main__":
     test_imageTransfLeft()
     test_imageTransfRight()
     test_imageTransfTurn()
+    test_image1()
+    test_image2()
+    test_image3()
     test_lines()
     test_linePos()
