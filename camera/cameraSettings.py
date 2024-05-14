@@ -16,7 +16,7 @@ class Camera(Picamera2):
         self.isRecording = False
         super().start()
 
-    def detectLineInFrame(self, preview=False, saveOutput=False) -> list[list[int]]:
+    def detectLineInFrame(self, preview=False, saveOutput=False) -> dict[list[int]]:
         """Return the position of 2 lines detect in the camera frame. This frame can be preview in a window or save in the chosen mp4 file."""
         frame = self.capture_array()
         detectLine = DetectLine(frame)
@@ -24,7 +24,7 @@ class Camera(Picamera2):
             self.write(detectLine.getFinalImage())
         if preview:
             self.preview(detectLine)
-        return detectLine.lines
+        return detectLine.get_pos()
 
     def checkStopRecordingCondition(self) -> None:
         """Checks to update the camera status if the camera frame is seen as a black screen."""

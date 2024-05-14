@@ -1,12 +1,12 @@
 from time import time
 
 class LinesProcess:
-    def __init__(self, milieu: int) -> None:
-        self.milieu = milieu #404
+    def __init__(self, milieu=404) -> None:
+        self.milieu = milieu
         self.queue = []
         self.delay = 0.5
 
-    def calcul(self, lignes: dict) -> list:
+    def calcul(self, lignes: dict[list]) -> list:
         """fonction permettant de calculer la position relative du coureur par rapport au centre du couloir
         entrée : dict de listes (coordonnées)
         sortie : liste de float (pourcentage de déviation par rapport au centre [ % gauche, % droite])"""
@@ -41,7 +41,7 @@ class LinesProcess:
         while len(self.queue) > 0 and newTime - self.queue[0][0] >= self.delay:
             self.queue.pop(0)
 
-    def moyenne(self, newValue: list,a=0,b=0) -> list:
+    def moyenne(self, newValue: list, a=0, b=0) -> list:
         """fonction permettant de faire la moyenne des deuxiemes valeurs de tuples
         entrée: liste de tuple
         sorite: liste de float"""
@@ -61,12 +61,10 @@ class LinesProcess:
                 value+=0
             elif moy[i]<0.66:
                 value+=(-1)**(i+1)
-            else :
+            else:
                 value+=2*(-1)**(i+1)
         return value
 
-    def output(self, lignes: list) -> int:
-        """fonction utilisant les fonctions ci-dessus
-        entrée: dict de listes
-        sortie: un entier"""
+    def output(self, lignes: dict[list]) -> int:
+        """Position du coureur"""
         return self.linePosition(self.moyenne(self.calcul(lignes)))
