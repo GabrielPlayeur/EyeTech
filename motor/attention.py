@@ -26,4 +26,6 @@ class Attention(ParentsMotor):
         sleep(0.5*self.duree)
 
 if __name__ == "__main__":
-    Attention().start()
+    p = ParentsMotor()
+    p.setPin()
+    Attention(p.MG, p.MD).start()

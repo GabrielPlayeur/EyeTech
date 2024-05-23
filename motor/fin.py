@@ -37,4 +37,6 @@ class Fin(ParentsMotor):
         self.court()
 
 if __name__ == "__main__":
-    Fin().start()
+    p = ParentsMotor()
+    p.setPin()
+    Fin(p.MG, p.MD).start()

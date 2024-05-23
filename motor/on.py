@@ -28,4 +28,6 @@ class On(ParentsMotor):
         self.VIBD(0)
 
 if __name__ == "__main__":
-    On().start()
+    p = ParentsMotor()
+    p.setPin()
+    On(p.MG, p.MD).start()

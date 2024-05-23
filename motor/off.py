@@ -29,4 +29,6 @@ class Off(ParentsMotor):
         self.VIBD(0)
 
 if __name__ == "__main__":
-    Off().start()
+    p = ParentsMotor()
+    p.setPin()
+    Off(p.MG, p.MD).start()
